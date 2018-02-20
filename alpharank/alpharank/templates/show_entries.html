@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <form action="{{ url_for('show_items') }}" method=post class=add-entry>
+      <dl>
+        <dt>Title:
+        <dd><input type=text size=30 name=title>
+        <dt>Text:
+        <dd><textarea name=text rows=5 cols=40></textarea>
+        <dd><input type=submit value=Refresh>
+      </dl>
+    </form>
+  {% endif %}
+  <ul class=entries>
+  {% for entry in entries %}
+    <li><h2>{{ entry.k }}</h2>{{ entry.i|safe}} {{ entry.p|safe}} {{ entry.v|safe}}
+  {% else %}
+    <li><3m>Unbelievable. No entries here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,1 @@
+from .alpharank import app

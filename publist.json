@@ -1,0 +1,253 @@
+{
+  "areas":[
+    {"name": "AI",
+     "subareas":[
+       {"name": "Artificial intelligence",
+        "urls": [
+          {"name": "ACM SIGAI", "url": "http://sigai.acm.org/index.html"},
+          {"name": "AAAI", "url": "http://aaai.org"}
+          ],
+        "confs": [
+          {"name": "AAAI", "url": "http://dblp.org/db/conf/aaai/"},
+          {"name": "IJCAI", "url": "http://dblp.org/db/conf/ijcai/index.html"}
+        ]},
+       {"name": "Computer vision",
+        "urls":[
+          {"name":"CVF", "url": "https://www.cv-foundation.org/"}
+          ],
+        "confs": [
+          {"name": "CVPR", "url": "http://dblp.org/db/conf/cvpr/index.html"},
+          {"name": "ECCV", "url": "http://dblp.org/db/conf/eccv/index.html"},
+          {"name": "ICCV", "url": "http://dblp.org/db/conf/iccv/index.html"}
+        ]},
+       {"name": "Machine Learning & data mining",
+        "urls":[
+          {"name": "ACM SIGKDD", "url":"http://www.kdd.org/"},
+          {"name": "IMLS", "url":"http://www.machinelearning.org/"},
+          {"name": "NIPS", "url":"https://nips.cc/"}
+          ],
+        "confs":[
+          {"name": "ICML", "url": "http://dblp.org/db/conf/icml/index.html"},
+          {"name": "KDD", "url": "http://dblp.org/db/conf/kdd/index.html"},
+          {"name": "NIPS", "url": "http://dblp.org/db/conf/nips/index.html"}
+        ]},
+       {"name": "Natural language processing",
+        "urls":[
+          {"name":"ACL", "url":"https://www.aclweb.org/portal/"}
+        ],
+        "confs":[
+          {"name":"ACL", "url":"http://dblp.org/db/conf/acl/index.html"},
+          {"name":"EMNLP", "url":"http://dblp.org/db/conf/emnlp/index.html"},
+          {"name":"NAACL", "url":"http://dblp.org/db/conf/naacl/index.html"}
+        ]},
+       {"name": "The Web & information retrieval",
+        "urls":[
+          {"name": "ACM SIGIR", "url":"http://sigir.org/"}
+        ],
+        "confs":[
+          {"name":"SIGIR","url":"http://dblp.org/db/conf/sigir/index.html"},
+          {"name":"WWW","url":"http://dblp.org/db/conf/www/index.html"}
+        ]}
+       ]},
+    {"name": "Systems",
+     "subareas":[
+       {"name": "Computer architecture",
+        "urls": [
+          {"name":"ACM SIGARCH", "url":"https://www.sigarch.org/"}
+        ],
+        "confs":[
+          {"name":"ASPLOS", "url":"http://dblp.org/db/conf/asplos/index.html"},
+          {"name":"ISCA", "url":"http://dblp.org/db/conf/isca/index.html"},
+          {"name":"MICRO", "url":"http://dblp.org/db/conf/micro/index.html"},
+          {"name":"HPCA", "url":"http://dblp.org/db/conf/hpca/index.html"}
+        ]},
+       {"name": "Computer networks",
+        "urls": [
+          {"name":"ACM SIGCOMM", "url":"http://sigcomm.org/"}
+          ],
+        "confs":[
+          {"name":"SIGCOMM", "url":"http://dblp.org/db/conf/sigcomm/index.html"},
+          {"name":"NSDI", "url":"http://dblp.org/db/conf/nsdi/index.html"}
+        ]},
+       {"name": "Computer security",
+        "urls":[
+          {"name":"ACM SIGSAC","url":"http://sigsac.org/"},
+          {"name":"IEEE S&P","url":"https://www.ieee-security.org/"},
+          {"name":"USENIX","url":"https://www.usenix.org/"}
+        ],
+        "confs":[
+          {"name":"CCS","url":"http://dblp.org/db/conf/ccs/index.html"},
+          {"name":"IEEE S&P (\"Oakland\")","url":"http://dblp.org/db/conf/sp/"},
+          {"name":"USENIX Security","url":"http://dblp.org/db/conf/uss/"},
+          {"name":"NDSS", "url":"http://dblp.org/db/conf/ndss/"}
+        ]},
+       {"name": "Databases",
+        "urls":[
+          {"name":"ACM SIGMOD","url":"http://sigmod.org/"}
+        ],
+        "confs":[
+          {"name":"SIGMOD", "url":"http://dblp.org/db/conf/sigmod/"},
+          {"name":"VLDB", "url":"http://dblp.org/db/conf/vldb/"}
+        ]},
+       {"name": "Design automation",
+        "urls":[
+          {"name":"ACM SIGDA","url":"http://sigda.org/"}
+        ],
+        "confs":[
+          {"name":"DAC","url":"http://dblp.org/db/conf/dac/"},
+          {"name":"ICCAD","url":"http://dblp.org/db/conf/iccad/"}
+        ]},
+       {"name": "Embedded & real-time systems",
+        "urls":[
+          {"name":"ACM SIGBED", "url":"http://sigbed.org/"}
+        ],
+        "confs":[
+          {"name":"EMSOFT","url":"http://dblp.org/db/conf/emsoft/"},
+          {"name":"RTAS","url":"http://dblp.org/db/conf/rtas/"},
+          {"name":"RTSS","url":"http://dblp.org/db/conf/rtss/"}
+        ]},
+       {"name": "High-performance computing",
+        "urls":[
+          {"name":"ACM SIGHPC", "url":"http://sighpc.org/"}
+        ],
+        "confs":[
+          {"name":"HPDC","url":"http://dblp.org/db/conf/hpdc/"},
+          {"name":"ICS","url":"http://dblp.org/db/conf/ics/"},
+          {"name":"SC","url":"http://dblp.org/db/conf/sc/"}
+        ]},
+       {"name": "Mobile computing",
+        "urls":[
+          {"name":"ACM SIGMOBILE","url":"http://sigmobile.org/"}
+        ],
+        "confs":[
+          {"name":"MobiCom","url":"http://dblp.org/db/conf/mobicom/"},
+          {"name":"MobiSys","url":"http://dblp.org/db/conf/mobisys/"},
+          {"name":"SenSys","url":"http://dblp.org/db/conf/sensys/"}
+          ]},
+       {"name": "Measurement & perf. analysis",
+        "urls":[
+          {"name":"ACM SIGMETRICS","url":"http://sigmetrics.org/"}
+          ],
+        "confs":[
+          {"name":"IMC","url":"http://dblp.org/db/conf/imc/"},
+          {"name":"SIGMETRICS","url":"http://dblp.org/db/conf/sigmetrics/"}
+          ]},
+       {"name": "Operating systems",
+        "urls":[
+          {"name":"ACM SIGOPS","url":"http://sigops.org/"},
+          {"name":"USENIX", "url":"https://www.usenix.org/"}
+          ],
+        "confs":[
+          {"name":"OSDI","url":"http://dblp.org/db/conf/osdi/"},
+          {"name":"SOSP","url":"http://dblp.org/db/conf/sosp/"},
+          {"name":"EuroSys","url":"http://dblp.org/db/conf/eurosys/"},
+          {"name":"FAST","url":"http://dblp.org/db/conf/fast/"},
+          {"name":"USENIX ATC","url":"http://dblp.org/db/conf/usenix/"}
+          ]},
+       {"name": "Programming languages",
+       "urls":[
+         {"name":"ACM SIGPLAN","url":"http://sigplan.org/"}
+         ],
+       "confs":[
+         {"name":"PLDI","url":"http://dblp.org/db/conf/pldi/"},
+         {"name":"POPL","url":"http://dblp.org/db/conf/popl/"},
+         {"name":"ICFP","url":"http://dblp.org/db/conf/icfp/"},
+         {"name":"OOPSLA","url":"http://dblp.org/db/conf/oopsla/"}
+         ]},
+       {"name": "Software engineering",
+        "urls":[
+          {"name":"ACM SIGSOFT","url":"http://sigsoft.org/"}
+          ],
+        "confs":[
+          {"name":"FSE","url":"http://dblp.org/db/conf/sigsoft/"},
+          {"name":"ICSE","url":"http://dblp.org/db/conf/icse/"},
+          {"name":"ASE","url":"http://dblp.org/db/conf/kbse/"},
+          {"name":"ISSTA","url":"http://dblp.org/db/conf/issta/"}
+          ]}
+       ]},
+    {"name": "Theory",
+     "subareas":[
+       {"name": "Algorithms & complexity",
+        "urls":[
+          {"name":"ACM SIGACT","url":"http://sigact.org/"},
+          {"name":"IEEE TCMF","url":"https://www.computer.org/portal/web/tcmf"}
+          ],
+        "confs":[
+          {"name":"FOCS","url":"http://dblp.org/db/conf/focs/"},
+          {"name":"SODA","url":"http://dblp.org/db/conf/soda/"},
+          {"name":"STOC","url":"http://dblp.org/db/conf/stoc/"}
+        ]},
+       {"name": "Cryptography",
+        "urls":[
+          {"name":"IACR", "url":"https://www.iacr.org/"}
+          ],
+        "confs":[
+          {"name":"CRYPTO","url":"http://dblp.org/db/conf/crypto/"},
+          {"name":"EuroCrypt","url":"http://dblp.org/db/conf/eurocrypt/"}
+        ]},
+       {"name": "Logic & verification",
+        "urls":[
+          {"name":"ACM SIGLOG", "url":"https://siglog.org/"}
+          ],
+        "confs":[
+          {"name":"CAV","url":"http://dblp.org/db/conf/cav/"},
+          {"name":"LICS","url":"http://dblp.org/db/conf/lics/"}
+          ]}
+       ]},
+    {"name": "Interdisciplinary Areas",
+     "subareas":[
+       {"name": "Comp. bio & bioinformatics",
+        "urls":[
+          {"name":"ACM SIGBIO","url":"https://sigbio.org/"}
+          ],
+        "confs":[
+          {"name":"ISMB","url":"http://dblp.org/db/conf/ismb/"},
+          {"name":"RECOMB","url":"http://dblp.org/db/conf/recomb/"}
+          ]},
+       {"name": "Computer graphics",
+        "urls":[
+          {"name":"ACM SIGGRAPH"}
+          ],
+        "confs":[
+          {"name":"SIGGRAPH", "url":"http://dblp.org/db/conf/siggraph/"},
+          {"name":"SIGGRAPH Asia", "url":"http://dblp.org/db/conf/siggraph/"}
+          ]},
+       {"name": "Economics & computation",
+        "urls":[
+          {"name":"ACM SIGECOM","url":"https://sigecom.org/"}
+          ],
+        "confs":[
+          {"name":"EC", "url":"http://dblp.org/db/conf/sigecom/"},
+          {"name":"WINE","url":"http://dblp.org/db/conf/wine/"}
+          ]},
+       {"name": "Human-computer interaction",
+        "urls":[
+          {"name":"ACM SIGCHI", "url":"https://sigchi.org/"}
+          ],
+        "confs":[
+          {"name":"CHI", "url":"http://dblp.org/db/conf/chi/"},
+          {"name":"UbiComp","url":"http://dblp.org/db/conf/huc/"},
+          {"name":"Pervasive","url":"http://dblp.org/db/conf/pervasive/"},
+          {"name":"IMWUT","url":"http://dblp.org/db/journals/imwut/"},
+          {"name":"UIST","url":"http://dblp.org/db/conf/uist/"}
+          ]},
+       {"name": "Robotics",
+       "urls":[
+         {"name":"IEEE RAS","url":"http://www.ieee-ras.org/"}
+         ],
+       "confs":[
+         {"name":"ICRA","url":"http://dblp.org/db/conf/icra/"},
+         {"name":"IROS","url":"http://dblp.org/db/conf/iros/"},
+         {"name":"RSS","url":"http://dblp.org/db/conf/rss/"}
+         ]},
+       {"name": "Visualization",
+       "urls":[
+         {"name":"IEEE VGTC","url":"http://vgtc.org/"}
+         ],
+       "confs":[
+         {"name":"VIS","url":"http://dblp.org/db/conf/tvcg/"},
+         {"name":"VR","url":"http://dblp.org/db/conf/vr/"}
+         ]}
+       ]}
+  ]
+}

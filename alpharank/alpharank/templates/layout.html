@@ -1,0 +1,32 @@
+<!doctype html>
+<title>Alpharank-Academic ranking in computer science</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static',filename='style.css')}}">
+<div class=page>
+    <h1>Alpharank v1.0</h1>
+    <div class=patch>
+        Come to try this fantastic ranking website! You can search different domain in computer science area and find what's up in there. If you find something wrong, don't worry, we are still working on it! Contact us at xxx@xxx.com~ Hope you enjoy this :-)
+    </div>
+    <div class="row">
+        <div class="column">
+        {% for que in queries.HierQueries %}
+            <h2> {{que.genre}} </h2>
+            {% for child in que.childrens %}
+            <h3> {{child.genre}}</h3>
+            {% endfor %}
+        {% endfor %}
+        </div>
+
+        <div class="column">world!</div>
+    </div>
+    <div class=metanav>
+    {% if not session.logged_in %}
+        <a href="{{ url_for('login') }}">log in </a>
+    {% else %}
+        <a href="{{ url_for('show_items') }}">Show items</a>
+    {% endif %}
+    </div>
+    {% for message in get_flashed_messages() %}
+        <div class=flash>{{ message }}</div>
+    {% endfor %}
+    {% block body %}{% endblock %}
+</div>
