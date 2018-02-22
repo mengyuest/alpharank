@@ -41,7 +41,7 @@
 2. `select DISITINCT what from tablename;` to find different keys.
 3. `select count(what) from tablename;` to find sum
 4. `select what from tablename where "colname"='word'` to find exact match
-5. `select what from tablename where "colname" likes '%pattern%'` to find pattern match
+5. `select what from tablename where "colname" like '%pattern%'` to find pattern match
 6. Cursor can use multis
 7. `fetchmany` to fetch several, `fetchone` is just one, `fetchall` is all
 8. Cursor has client-side and server-side. Normally we use client-side and when do insert/alter/updates changes we actually take up in memory.

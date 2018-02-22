@@ -19,7 +19,14 @@
         </button>
         </li>
     </ul>
+
+    <div>
+    <h3>Tree View</h3>
+    <!-- <ul>
+        <item v-for="model in ">
+    </ul> -->
   </div>
+</div>
 </template>
 
 <style>
@@ -33,6 +40,7 @@
 
 <script>
 let nextId=1
+
 export default{
     name: "QueryTree",
     data(){
@@ -44,13 +52,15 @@ export default{
                 text: 'milkshake'},
                 {id: nextId+3,
                 text: 'coco cola'}
-            ]
+            ],
         }
     },
     methods:{
         onC(){
             console.log("clicked")
-        }
-    }
+        },
+
+    },
+
 }
 </script>

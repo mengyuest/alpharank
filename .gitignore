@@ -116,3 +116,8 @@ tmp/*
 fieldFile.txt
 pubFile.txt
 pubSchema.txt
+country-info.csv
+csrankings.csv
+dblp-aliases.csv
+faculty.txt
+articles.json

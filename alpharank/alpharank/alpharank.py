@@ -186,6 +186,20 @@ def subset():
     }
     return jsonify(response)
 
+@app.route('/api/confcount/')
+def confcount():
+    conf=request.args["data"]
+
+    cur=conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
+    print("SELECT * FROM pubSchema where booktitle=\'"+conf+"\' limit 10;")
+    cur.execute("SELECT * FROM pubSchema where booktitle=\'"+conf+"\' limit 10;")
+    res=cur.fetchall()
+    cur.close()
+    response={
+        'subSet':res
+    }
+    return jsonify(response)
+
 @app.route('/',defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
