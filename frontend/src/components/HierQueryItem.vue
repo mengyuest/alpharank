@@ -2,7 +2,7 @@
 
 <template>
 <div id="HierQueryItem"
-v-bind:style="{backgroundColor: model.level>0?'white':'lightblue' ,fontSize: 20-model.level*2 + 'px'}"
+v-bind:style="{backgroundColor: model.level>0?'white':'lightblue' ,fontSize: 30-model.level*5 + 'px'}"
 >
     <div>
          <div> <!-- v-bind:style="{marginLeft:0*model.level-1+'em'}"> -->
@@ -92,22 +92,29 @@ export default{
         },
         receiveLowerCheck:function(value_should_passby){
             var isAllChildrenOff=true;
+            var isAllChildrenOn=true;
             var child;
             for (child of this.model.children)
             {
                 if (child.checked===true)
                 {
                     isAllChildrenOff=false;
-                    break;
+                }
+                else
+                {
+                    isAllChildrenOn=false;
                 }
             }
             if(isAllChildrenOff===true)
             {
                 this.model.checked=false;
             }
+            else if(isAllChildrenOn===true)
+            {
+                this.model.checked=true;
+            }
             this.$emit('sendBackCheck',value_should_passby)
         }
-
     },
 }
 

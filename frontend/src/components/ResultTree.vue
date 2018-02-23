@@ -2,11 +2,8 @@
 
 <template>
   <div id="ResultTree">
-    <h2>Result</h2>
 
-    <h3>Dynamic Result</h3>
-    <p> {{message}} </p>
-    <h3>Parent gave</h3>
+    <!-- <h3>Parent gave</h3>
     <div v-if="results.length>=1 && results[0].length>1">
     <table >
         <tr v-for="rec in results">
@@ -14,12 +11,12 @@
                 {{item}}
             </th>
         </tr>
-    </table>
+    </table> -->
+
 </div>
-<div v-else>
+<!-- <div v-else>
     {{results}}
-</div>
-  </div>
+</div> -->
 </template>
 
 <style>
@@ -32,12 +29,14 @@
 </style>
 
 <script>
+import ResultItem from './ResultItem.vue'
+
 export default{
     name: "ResultTree",
-    props:["results"],
+    components:{ResultItem},
+    props:["treeResults"],
     data(){
         return {
-            message:"sth old"
         }
     }
 }

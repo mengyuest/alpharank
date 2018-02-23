@@ -1,14 +1,20 @@
 import os
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-from flask import jsonify
+from flask import json,jsonify
 import psycopg2
 import psycopg2.extras
 #from flask_sqlalchemy import SQLAlchemy
-from alpharank.model import Queries, HierQuery, RangeQuery, SelectQuery
+from alpharank.model import Queries, HierQuery, RangeQuery, SelectQuery, University, Faculty
 import random
 choose_vue=True
 import requests # to enable backend API provides
 from flask_cors import CORS
+import csv
+import sys
+from sys import getsizeof
+from collections import defaultdict
+import jsonpickle
+
 
 # TO avoid {{}} conflict with Vue
 class CustomFlask(Flask):
@@ -36,6 +42,11 @@ conn=psycopg2.connect(dbname="dblp",user="meng")
 
 app.config["DEBUG"]=True
 app.config['SECRET_KEY']="hehe"
+
+UniversityDict={}
+FacultyDict={}
+NameToScholarId={}
+
 #app.config['SQLALCHEMY_DATABASE_URI']='postgresql://localhost/dblp'
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 #db=SQLAlchemy(app)
@@ -151,6 +162,7 @@ def logout():
 
 @app.route('/')
 def index():
+    loadFromCSRanking()
     return render_template("index.html")
 
 '''
@@ -199,6 +211,209 @@ def confcount():
         'subSet':res
     }
     return jsonify(response)
+
+@app.route('/api/naivemetrics/')
+def naivemetrics():
+    sub_area_str=request.args["data"]
+    range_str=request.args["range"]
+    region_str=request.args["region"]
+    search_str=request.args["searched"]
+    res=naiveHandler(sub_area_str,range_str,region_str,search_str)
+    response={
+        'subSet':res
+    }
+    return jsonify(response)
+
+def naiveHandler(sub_area_str,range_str,region_str, search_str):
+    region="".join(region_str.lower().split(" "))
+    print(region)
+    loadFromCSRanking(region)
+    result=[]
+    sub_area_list=json.loads(sub_area_str)
+    range_list=json.loads(range_str)
+    search_str=search_str.strip().lower()
+    # print("region=="+region_str)
+
+    cur=conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
+
+    M=len(sub_area_list)
+
+    for university in UniversityDict.values():
+        university.allocate(M)
+
+    for i,subArea in enumerate(sub_area_list):
+        for conf in subArea:
+            searchSQL=""
+            if len(search_str)!=0:
+                searchSQL="AND LOWER(\"title\") like \'%{0}%\'".format(search_str)
+            SQL="SELECT * FROM {0} WHERE CAST(\"year\" AS INTEGER)>={1} AND CAST(\"year\" AS INTEGER)<={2} {3} ;".format(conf,range_list[0],range_list[1],searchSQL)
+            cur.execute(SQL)
+            res=cur.fetchall()
+
+            for record in res:
+                # print(record.author)
+                author_list=record.author.split(",")
+                N=len(author_list)
+                credit=1.0/N
+                #when receive credit ,first update faculty, then update university
+                for author in author_list:
+                    if author in NameToScholarId:
+                        faculty=FacultyDict[NameToScholarId[author]]
+                        university=UniversityDict[faculty.affiliation]
+
+                        faculty.updateP()
+                        faculty.updateC(credit)
+                        university.updateG(credit,i)
+
+    for university in UniversityDict.values():
+        university.calF()
+        university.calG()
+
+    # print(UniversityDict)
+    result=sorted(UniversityDict.values(),key=lambda x: x.g, reverse=True)
+    for x in result:
+        x.sort()
+
+    return [x.dump() for x in result if x.valid()]
+
+    #print(result[:3])
+    #return json_str #([[str(x),[]] for x in result])
+
+def loadFromCSRanking(region):
+    global UniversityDict
+    global FacultyDict
+    global NameToScholarId
+    UniversityDict={}
+    FacultyDict={}
+    NameToScholarId={}
+    cntDict=defaultdict(int)
+    cnt=0
+    with open('../country-info.csv','r') as F:
+        #TODO This should somehow move to initial part cause it won't change
+        judger=csv.DictReader(F)
+        schoolSet=set()
+        if region!= "world":
+            for rec in judger:
+                if region=="theusa":
+                    schoolSet.add(rec["institution"])
+                elif rec["region"]==region:
+                        schoolSet.add(rec["institution"])
+
+        with open('../faculty.txt','r') as f:
+            reader=csv.DictReader(f)#,delimiter='\,')
+            for rec in reader:
+                school = rec["affiliation"]
+                if region=="theusa":
+                    if school in schoolSet:
+                        continue
+                elif region!="world" and school not in schoolSet:
+                    continue
+                shnid=genShnid(rec["scholarid"],rec["homepage"])
+                NameToScholarId[rec["name"]]=shnid
+                if rec["affiliation"] not in UniversityDict:
+                    university = University()
+                    university.name=rec["affiliation"]
+                    UniversityDict[rec["affiliation"]]=university
+                else:
+                    university=UniversityDict[rec["affiliation"]]
+                if shnid not in FacultyDict:
+                    faculty = Faculty()
+                    faculty.scholarid = rec["scholarid"]
+                    faculty.name.append(rec["name"])
+                    faculty.affiliation=rec["affiliation"]
+                    faculty.homepage=rec["homepage"]
+                    FacultyDict[shnid]=faculty
+                    university.faculties.append(faculty)
+                else:
+                    faculty=FacultyDict[shnid]
+                    isSame=False
+                    cnt+=1
+                    for name in faculty.name:
+                        if areTwoNameSame(name,rec["name"],faculty.homepage) or areTwoNameSame(rec["name"],name,faculty.homepage):
+                            #print("\t",cnt,rec["name"],"~",name)
+                            isSame=True
+                            faculty.name.append(rec["name"])
+                            break
+
+                    if isSame==False:
+                        #print(faculty.homepage)
+                        #print("\t",cnt,rec["name"],"DIFF!!!","not ", ",".join(faculty.name))
+                        newFaculty=Faculty()
+                        newFaculty.scholarid = rec["scholarid"]
+                        newFaculty.name.append(rec["name"])
+                        newFaculty.affiliation=rec["affiliation"]
+                        newFaculty.homepage=rec["homepage"]
+                        cntDict[shnid]+=1
+                        new_shnid=genShnid(rec["scholarid"],rec["homepage"],cntDict[shnid])
+                        NameToScholarId[rec["name"]]=new_shnid
+                        FacultyDict[new_shnid]=newFaculty
+                        university.faculties.append(newFaculty)
+
+def genShnid(scholarId, homepage, confusedId=0):
+    return scholarId+"|"+homepage+"|"+str(confusedId)
+
+def areTwoNameSame(x,y,homepage):
+    xs=x.split(" ")
+    ys=y.split(" ")
+
+    "If already confused ided... like Zhang San 0001"
+    if (xs[-1].isdigit() or ys[-1].isdigit()) and xs[-1]!=ys[-1]:
+        return False
+
+    if xs[-1].isdigit() and ys[-1].isdigit() and xs[-1]==ys[-1] and (xs[0] in ys[0] or xs[-2] in ys[-2]):
+        return True
+
+    "Omit mid-name"
+    if (len(xs)>1 and xs[0]==ys[0] and xs[-1]==ys[-1]):
+        return True
+
+    """A. Blabla ~ Apple Blabla or Alex Blabla ~ Alexander Blabla"""
+    if (xs[-1]==ys[-1] and xs[0][0]==ys[0][0] and len(xs[0])>1 and (xs[0][1]=="." or xs[0] in ys[0])):
+        return True
+
+    """Allison B. Lewko ~ Allison Bishop"""
+    if (xs[0]==ys[0] and xs[1][0]==ys[1][0] and len(xs[1])>1 and xs[1][1]=="."):
+        return True
+
+    if (xs[0]==ys[0] and xs[1] in ys[1]):
+        return True
+
+    if (len(xs)>1 and len(ys)>1 and xs[0]==ys[0] and xs[1]==ys[1]):
+        return True
+
+    if (xs[-1]==ys[0]):
+        return True
+
+    if (xs[-1]==ys[-1] and len(xs[0])>2 and len(ys[0])>2 and xs[0][0:3]==ys[0][0:3]):
+        return True
+
+    """RISKY~"""
+    for item in xs:
+        if len(item) > 4:
+            if item in ys:
+                return True
+
+            """Foreign word similarity eg: Öznur Özkasap ~  Oznur Ozkasap"""
+            for yss in ys:
+                if theyAreVerySimilar(item, yss):
+                    return True
+
+    """set like x y z ~ x y"""
+    if set(xs) == (set(xs) or set(ys)):
+       return True
+
+    return False
+
+def theyAreVerySimilar(x,y):
+    if len(x)!=len(y):
+        return False
+
+    threshold=0.7
+    crt=0
+    for i,j in zip(x,y):
+        crt+=int(i==j)
+    return 1.0*crt/len(x)>threshold
+
 
 @app.route('/',defaults={'path': ''})
 @app.route('/<path:path>')
